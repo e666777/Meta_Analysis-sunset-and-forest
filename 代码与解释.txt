@@ -1,0 +1,16 @@
+install.packages("metafor")     ###安装metafor包
+install.packages("metaviz")     ###安装metaviz包
+library(metafor)                      
+library(metaviz)                    
+data = read.csv("data1 N = 50 theta = 0.2 tau = 0 sz = 5-10")                 
+dat <- escalc(measure="ZCOR", ri=r, ni=N, data=data,slab=paste(authors, year, sep=", "))
+res <- rma(yi, vi, data=dat)
+res
+##落日漏斗图##
+viz_sunset(res,contours = TRUE)                  
+##普通森林图##
+library(metaviz) 
+viz_thickforest(res,type = "standard",annotate_CI = FALSE,confidence_level = 0.95,col = "Blues",summary_col = "Blues",tick_col = "firebrick",text_size = 3,xlab = "Effect")
+##森林图pro##
+library(metaviz)
+viz_forest(x = mozart[1:10, c("d", "se")],group = mozart[1:10, "rr_lab"],study_labels = mozart[1:10, "study_name"], summary_label = c("Summary (rr_lab = no)", "Summary (rr_lab = yes)"), xlab = "Cohen d", variant = "thick",annotate_CI = TRUE)
